@@ -1,7 +1,6 @@
 /*
-The idea would be to have the first 
-pixel of the image hold the size of
-the message. Then based on picture 
+I first considered having the first pixel to hold message length. However, if it's a big message, that wont work.
+Instead, we can pass the message length to the decryption part maybe?... Then based on picture 
 size, every nth pixel will have a 
 change to the b value based on ascii 
 value of text to input. will use lower 5 bits for 
