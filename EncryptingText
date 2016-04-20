@@ -9,7 +9,7 @@ storing message.
 
 /*
 This array holds all letter options for message. Each index corresponds to the bit
-number which will modify the blue value.
+number which will modify the blue value. May change to dictionary with ascii values
 */
 char[] letterkey={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
                     'r','s','t','u','v','w','x','y','z','.',',','?','!',' '};
