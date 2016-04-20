@@ -1,0 +1,19 @@
+/*
+The idea would be to have the first 
+pixel of the image hold the size of
+the message. Then based on picture 
+size, every nth pixel will have a 
+change to the b value based on ascii 
+value of text to input. will use lower 5 bits for 
+storing message. 
+*/
+
+/*
+This array holds all letter options for message. Each index corresponds to the bit
+number which will modify the blue value.
+*/
+char[] letterkey={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
+                    'r','s','t','u','v','w','x','y','z','.',',','?','!',' '};
+                   
+String hiddenMsg="This is a hidden message."; //actually will get input from user
+
