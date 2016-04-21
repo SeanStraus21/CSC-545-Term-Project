@@ -20,28 +20,35 @@ char[] letterkey={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p
                    
 String hiddenMsg="This is a hidden message."; //actually will get input from user
 
-PImage img;
+PImage img, currImg;
 
 void setup(){
   size(600,600);
   surface.setResizable(true);
   img=loadImage("hot_air.jpg");
+  currImg=img;
   surface.setSize(img.width,img.height);
 }
 void draw(){
-  hideMessage();
+  //hideMessage();
+  image(currImg,0,0);
 }
-void hideMessage(){
-  img.loadPixels();
+PImage hideMessage(PImage img){
+  PImage currImg;
+  currImg=img.get();
+  currImg.loadPixels();
   //int c=img.pixels[0];
   int messageLength=hiddenMsg.length();
   //calculate the interval to use for storing pixels
-  int interval=img.pixels.length/messageLength;
+  int interval=currImg.pixels.length/messageLength;
   int messageIndex=0;
-  for(int i=0; i<img.pixels.length; i+=interval){
+  for(int i=0; i<currImg.pixels.length; i+=interval){
     //get the color from the picture;
-    int c=img.pixels[i];
+    int c=currImg.pixels[i];
+    println("color before: "+ c);
     int b=c & 0xFF; //get blue value from c
+    //remove blue value from c
+    c=c-b;
     //below is the same as bitwise & operation of 11111111 & 11100000,which keeps upper 3 bits
     b=b&224; //take blue value and keep upper 224 (upper 3 bits) but remove last five bits
     //get char
@@ -71,10 +78,20 @@ void hideMessage(){
     //now add message to last bits
     b=b|keyValue;
     
-    //change b value in c
-    c=c&b;//?will this work???
+    //add modified b value to c
+    c=c+b;
+    println("color after: "+c);
     //set pixel at interval location to altered color
-    img.pixels[i]=c;
+    currImg.pixels[i]=c;
     messageIndex++;
   }
+  return currImg;
+}
+  void keyReleased(){
+    if(key=='1'){
+      currImg=img;
+    }
+    else if(key=='2'){
+      currImg=hideMessage(img);
+    }
 }
