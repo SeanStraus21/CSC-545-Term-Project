@@ -58,26 +58,26 @@ PImage hideMessage(PImage img){
     //change from ascii value to indexed value
     int keyValue;
     if(curChar==46)//if it's a period
-      {
-        keyValue=26;
-      }
-     else if(curChar==44)
+    {
+      keyValue=26;
+    }
+    else if(curChar==44)
        keyValue=27;
-     else if(curChar==63)//if it's a question mark
-     {
-       keyValue=28;
-     }
-     else if(curChar==33)//exclamation point
-       keyValue=29;
-     else if(curChar==32)//space
-       keyValue=30;
-     else if(curChar==34||curChar==39)//quotation ' or "
-       keyValue=31;
-     else
-       keyValue=int(curChar)-97;
+    else if(curChar==63)//if it's a question mark
+    {
+      keyValue=28;
+    }
+    else if(curChar==33)//exclamation point
+      keyValue=29;
+    else if(curChar==32)//space
+      keyValue=30;
+    else if(curChar==34||curChar==39)//quotation ' or "
+      keyValue=31;
+    else
+      keyValue=int(curChar)-97;
     //now add message to last bits
     b=b|keyValue;
-    
+
     //add modified b value to c
     c=c+b;
     println("color after: "+c);
@@ -87,11 +87,11 @@ PImage hideMessage(PImage img){
   }
   return currImg;
 }
-  void keyReleased(){
-    if(key=='1'){
-      currImg=img;
-    }
-    else if(key=='2'){
-      currImg=hideMessage(img);
-    }
+void keyReleased(){
+  if(key=='1'){
+    currImg=img;
+  }
+  else if(key=='2'){
+    currImg=hideMessage(img);
+  }
 }
