@@ -55,18 +55,15 @@ PImage hideMessage(PImage img){
     char curChar=hiddenMsg.charAt(messageIndex);
     //switch char to lowercase
     curChar=Character.toLowerCase(curChar);
+
     //change from ascii value to indexed value
     int keyValue;
     if(curChar==46)//if it's a period
-    {
       keyValue=26;
-    }
     else if(curChar==44)
        keyValue=27;
     else if(curChar==63)//if it's a question mark
-    {
       keyValue=28;
-    }
     else if(curChar==33)//exclamation point
       keyValue=29;
     else if(curChar==32)//space
@@ -75,6 +72,7 @@ PImage hideMessage(PImage img){
       keyValue=31;
     else
       keyValue=int(curChar)-97;
+
     //now add message to last bits
     b=b|keyValue;
 
