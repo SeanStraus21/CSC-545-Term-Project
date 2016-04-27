@@ -1,11 +1,10 @@
 /*
-The idea would be to have the first 
-pixel of the image hold the size of
-the message. Then based on picture 
+Size of message must be less than or equal to size of picture.
+Then based on picture 
 size and message length, every nth pixel will have a 
 change to the b value based on ascii 
 value of text to input. will use lower 5 bits for 
-storing message. 
+storing message. interval is passed from encryption to decryption code
 */
 
 /*
@@ -19,7 +18,7 @@ char[] letterkey={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p
                     'r','s','t','u','v','w','x','y','z','.',',','?','!',' ','\''};
                    
 String hiddenMsg="This is a hidden message."; //actually will get input from user
-
+int interval;
 PImage img, currImg;
 
 void setup(){
@@ -40,7 +39,7 @@ PImage hideMessage(PImage img){
   //int c=img.pixels[0];
   int messageLength=hiddenMsg.length();
   //calculate the interval to use for storing pixels
-  int interval=currImg.pixels.length/messageLength;
+  interval=currImg.pixels.length/messageLength;
   int messageIndex=0;
   for(int i=0; i<currImg.pixels.length; i+=interval){
     //get the color from the picture;
@@ -55,27 +54,25 @@ PImage hideMessage(PImage img){
     char curChar=hiddenMsg.charAt(messageIndex);
     //switch char to lowercase
     curChar=Character.toLowerCase(curChar);
-
     //change from ascii value to indexed value
     int keyValue;
     if(curChar==46)//if it's a period
-      keyValue=26;
-    else if(curChar==44)
+        keyValue=26;
+     else if(curChar==44)
        keyValue=27;
-    else if(curChar==63)//if it's a question mark
-      keyValue=28;
-    else if(curChar==33)//exclamation point
-      keyValue=29;
-    else if(curChar==32)//space
-      keyValue=30;
-    else if(curChar==34||curChar==39)//quotation ' or "
-      keyValue=31;
-    else
-      keyValue=int(curChar)-97;
-
+     else if(curChar==63)//if it's a question mark
+       keyValue=28;
+     else if(curChar==33)//exclamation point
+       keyValue=29;
+     else if(curChar==32)//space
+       keyValue=30;
+     else if(curChar==34||curChar==39)//quotation ' or "
+       keyValue=31;
+     else
+       keyValue=int(curChar)-97;
     //now add message to last bits
     b=b|keyValue;
-
+    
     //add modified b value to c
     c=c+b;
     println("color after: "+c);
@@ -83,13 +80,31 @@ PImage hideMessage(PImage img){
     currImg.pixels[i]=c;
     messageIndex++;
   }
+  //update pixel array;
+  currImg.updatePixels();
   return currImg;
 }
-void keyReleased(){
-  if(key=='1'){
-    currImg=img;
+String extractMessage(PImage img){
+  String msg="";
+  int c, bits;
+  img.loadPixels();
+  for(int i=0; i<img.pixels.length; i+=interval){
+     c=img.pixels[i];
+     bits=c&0x1F; //get last 5 bits of blue value from c (F corresponds to 4 bits and 1 to 1 bit
+     //use bits to index letterkey and get character
+     msg+=letterkey[bits];
   }
-  else if(key=='2'){
-    currImg=hideMessage(img);
-  }
+  return msg;
+}
+  void keyReleased(){
+    if(key=='1'){
+      currImg=img;
+    }
+    else if(key=='2'){
+      currImg=hideMessage(img);
+      //extractMessage(currImg);
+    }
+    else if(key=='3'){
+      println(extractMessage(currImg));
+    }
 }
