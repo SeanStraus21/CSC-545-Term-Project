@@ -10,6 +10,8 @@ Image Quality:  The 'hiddenBitCount' lowest bits from each pixel of the
   quality of the hidden image.
 Inputs:  Hidden image's width and height are limited to be within the
   provided image's dimensions. 'hiddenBitCount' is set within [1, 7].
+  Hidden image is assumed to begin from the top-left corner of the
+  provided image.
 */
 PImage imageToImageDecrypt(PImage img,
     int widthSecret, int heightSecret, int hiddenBitCount) {
@@ -69,20 +71,18 @@ PImage imageToImageDecrypt(PImage img,
   */
 }
 
-// TODO: Change algorithm and description.
-/**
-Shift the bits of two 8bit color values and return an 8bit color value
-in which the lower order bits of the cover value are replaced with the 
-higher order bits of the secret value
-*/
-int bitDecrypt(int s, int c, int secretBitCount) {
-  int sShift,cShift,sMask,cMask,coverBitCount;
-  coverBitCount = 8 - secretBitCount;
-  sMask = 255 >> coverBitCount;
-  cMask = 255 << secretBitCount;
-  
-  cShift = c & cMask;
-  sShift = (s >> secretBitCount) & sMask;
-  
-  return cShift+sShift;
+
+int promoteBits(int c, int bitsToKeep) {
+  /*
+  Left shift the 'bitsToKeep' bits on the right side
+    into the leading bits followed by zeroes.
+  Examples x3:
+  >>> promoteBits(1, 2);
+  01000000
+  >>> promoteBits(255, 3);
+  11100000
+  >>> promoteBits(253, 7);
+  11111010
+  */
+  return c << (8 - bitsToKeep);
 }
