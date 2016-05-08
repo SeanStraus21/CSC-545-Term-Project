@@ -1,4 +1,4 @@
-/**
+/*
 imageToImageDecrypt:  Outputs a hidden image from the provided image,
   using the given parameters for the hidden dimensions and bit threshold.
 Programmer:  Noah Bumgardner
@@ -62,19 +62,27 @@ color decryptPixel(color c, int bitsToKeep) {
   return color(r, g, b);
 }
 
-
 int promoteBits(int c, int bitsToKeep) {
   /*
-  Left shift the 'bitsToKeep' bits on the right side
-    into the leading bits followed by zeroes.
-    Only keep 8 digits from the right.
+  Inputs:   'c' is used as an 8-digit binary number.
+            'bitsToKeep' is expected to be a positive integer.
+  Output:   8-digit binary number.
+  Process:  Using 'c' as an 8-digit binary number, it shifts the
+              'bitsToKeep' rightmost bits into the leftmost bits
+              of an eight-digit binary number. Followed by
+              trailing zeroes.
   Examples x3:
   >>> promoteBits(1, 2);
-  64    (== 01000000 in binary)
+  64
+  (01000000 in binary)
+
   >>> promoteBits(255, 3);
-  224   (== 11100000 in binary)
+  224
+  (11100000 in binary)
+
   >>> promoteBits(253, 7);
-  250   (== 11111010 in binary)
+  250
+  (11111010 in binary)
   */
   return 255 & (c << (8 - bitsToKeep));
 }
