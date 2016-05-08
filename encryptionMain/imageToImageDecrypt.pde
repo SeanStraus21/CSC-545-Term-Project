@@ -67,13 +67,14 @@ int promoteBits(int c, int bitsToKeep) {
   /*
   Left shift the 'bitsToKeep' bits on the right side
     into the leading bits followed by zeroes.
+    Only keep 8 digits from the right.
   Examples x3:
   >>> promoteBits(1, 2);
-  01000000
+  64    (== 01000000 in binary)
   >>> promoteBits(255, 3);
-  11100000
+  224   (== 11100000 in binary)
   >>> promoteBits(253, 7);
-  11111010
+  250   (== 11111010 in binary)
   */
-  return c << (8 - bitsToKeep);
+  return 255 & (c << (8 - bitsToKeep));
 }
