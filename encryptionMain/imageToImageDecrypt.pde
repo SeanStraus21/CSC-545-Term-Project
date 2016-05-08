@@ -18,6 +18,8 @@ PImage imageToImageDecrypt(PImage img,
   PImage output;
   color Pc,Ps,P; // TODO: Reduce
   int Rc,Gc,Bc,Rs,Gs,Bs,R,G,B; // TODO: Reduce
+  
+  color c;
 
   // Constrain variables to valid ranges.
   hiddenBitCount = constrain(hiddenBitCount, 1, 7);
@@ -33,42 +35,32 @@ PImage imageToImageDecrypt(PImage img,
     for (int x = 0; x < widthSecret; x++) {
       // TODO: INSERT CODE HERE
       // Get pixel from img pixel
+      c = img.get(x, y);
       // Get RGB values from pixel
       // Extract hidden R, G, and B values from original
       // Combine hidden RGB into hidden color
+      c = decryptPixel(c, hiddenBitCount);
       // Set hidden pixel of output.
-      ;
+      output.set(c, x, y);
     }
   }
+  output.updatePixels();
 
   return output;
+}
 
-  /*
-  for(int i=0;i<output.height;i++){
-    for(int j=0;j<output.width;j++){
-      //get colors from cover image pixel
-      Pc = imgCover.get(j,i);
-      Rc = round(red(Pc));
-      Gc = round(green(Pc));
-      Bc = round(blue(Pc));
-      
-      //get colors from secret image pixel
-      Ps = imgSecret.get(j,i);
-      Rs = round(red(Ps));
-      Gs = round(green(Ps));
-      Bs = round(blue(Ps));
-      
-      //imbed the secret image pixel in the cover image pixel
-      R = bitEncrypt(Rs,Rc,hiddenBitCount);
-      G = bitEncrypt(Gs,Gc,hiddenBitCount);
-      B = bitEncrypt(Bs,Bc,hiddenBitCount);
-      
-      P = color(R,G,B);
-      
-      output.set(j,i,P);
-    }
-  }
-  */
+color decryptPixel(color c, int bitsToKeep) {
+  int r, g, b;
+  // Get RGB components.
+  r = int(red(c));
+  g = int(green(c));
+  b = int(blue(c));
+  // Shift 'bitsToKeep' right bits to the left side.
+  r = promoteBits(r, bitsToKeep);
+  g = promoteBits(g, bitsToKeep);
+  b = promoteBits(b, bitsToKeep);
+  // Output combined RGB values
+  return color(r, g, b);
 }
 
 
