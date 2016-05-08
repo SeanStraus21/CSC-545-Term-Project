@@ -11,8 +11,8 @@ Use the number keys 0-5 to toggle the display
   1 = img2
   2 = img1 hidden inside img2
   3 = img2 hidden inside img1
-  4 = img1 extracted from img 3 (only left-half of img1, for testing)
-  5 = img2 extracted from img 4 (only left-half of img2, for testing)
+  4 = img1 extracted from img 3
+  5 = img2 extracted from img 4
 */
 
 PImage img1, img2, img3, img4, img5, img6;
