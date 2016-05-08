@@ -13,35 +13,34 @@ Inputs:  Hidden image's width and height are limited to be within the
   Hidden image is assumed to begin from the top-left corner of the
   provided image.
 */
-PImage imageToImageDecrypt(PImage img,
-    int widthSecret, int heightSecret, int hiddenBitCount) {
+PImage imageToImageDecrypt(PImage img, int widthSecret, int heightSecret,
+                           int hiddenBitCount) {
   PImage output;
-  color Pc,Ps,P; // TODO: Reduce
-  int Rc,Gc,Bc,Rs,Gs,Bs,R,G,B; // TODO: Reduce
-  
   color c;
+  int indexImg, indexOutput;
 
   // Constrain variables to valid ranges.
   hiddenBitCount = constrain(hiddenBitCount, 1, 7);
   widthSecret = constrain(widthSecret, 0, img.width);
   heightSecret = constrain(heightSecret, 0, img.height);
 
-  // Prepare and load images.
+  // Prepare and load images. Initialize
   output = new PImage(widthSecret, heightSecret);
   img.loadPixels();
   output.loadPixels();
 
+  // Hold current indexes for pixels arrays.
+  indexImg = 0;
+  indexOutput = 0;
+
+  // Decrypt hidden image from 'img' into 'output'.
   for (int y = 0; y < heightSecret; y++) {
-    for (int x = 0; x < widthSecret; x++) {
-      // TODO: INSERT CODE HERE
-      // Get pixel from img pixel
-      c = img.get(x, y);
-      // Get RGB values from pixel
-      // Extract hidden R, G, and B values from original
-      // Combine hidden RGB into hidden color
+    indexImg = y * img.width;
+    for (int x = 0; x < widthSecret; x++, indexImg++, indexOutput++) {
+      // Get pixel from img, decrypt pixel, then set pixel of 'output'.
+      c = img.pixels[indexImg];
       c = decryptPixel(c, hiddenBitCount);
-      // Set hidden pixel of output.
-      output.set(c, x, y);
+      output.pixels[indexOutput] = c;
     }
   }
   output.updatePixels();
