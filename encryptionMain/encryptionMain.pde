@@ -1,10 +1,10 @@
-/**
-Test framework for the imageToImageEncrypt function
+/*
+Test framework for the imageToImageEncrypt and imageToImageDecrypt functions.
 
-Set bitThreshold to modify the compression level of the hidden image
-A higher bitThreshold will lead to noticeable distortions in the output
-A lower bitThreshold will result in a heavily compressed version of the secret image
-A bitThreshold outside the range [1,7] will be cropped by the encryption function
+Set bitThreshold to modify the compression level of the hidden image.
+A higher bitThreshold will lead to noticeable distortions in the output.
+A lower bitThreshold will result in a heavily compressed version of the secret image.
+A bitThreshold outside the range [1, 7] will be cropped by the encryption function.
 
 Use the number keys 0-5 to toggle the display
   0 = img1
@@ -19,21 +19,21 @@ PImage img1, img2, img3, img4, img5, img6;
 PImage currentImage;
 int bitThreshold = 4;
 
-void setup(){
-  size(400,400);
+void setup() {
+  size(400, 400);
   background(0);
   img1 = loadImage("img1.jpg");
   img2 = loadImage("img2.jpg");
-  img3 = imageToImageEncrypt(img1,img2,bitThreshold);
-  img4 = imageToImageEncrypt(img2,img1,bitThreshold);
+  img3 = imageToImageEncrypt(img1, img2, bitThreshold);
+  img4 = imageToImageEncrypt(img2, img1, bitThreshold);
   img5 = imageToImageDecrypt(img3, img1.width, img1.height, bitThreshold);
   img6 = imageToImageDecrypt(img4, img2.width, img2.height, bitThreshold);
   currentImage = img1;
 }
 
-void draw(){
+void draw() {
   background(0);
-  image(currentImage,0,0);
+  image(currentImage, 0, 0);
 }
 
 
