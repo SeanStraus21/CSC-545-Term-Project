@@ -26,12 +26,13 @@ void setup(){
   img2 = loadImage("img2.jpg");
   img3 = imageToImageEncrypt(img1,img2,bitThreshold);
   img4 = imageToImageEncrypt(img2,img1,bitThreshold);
-  img5 = imageToImageDecrypt(img3, img1.width / 2, img1.height, bitThreshold);
-  img6 = imageToImageDecrypt(img4, img2.width / 2, img2.height, bitThreshold);
+  img5 = imageToImageDecrypt(img3, img1.width, img1.height, bitThreshold);
+  img6 = imageToImageDecrypt(img4, img2.width, img2.height, bitThreshold);
   currentImage = img1;
 }
 
 void draw(){
+  background(0);
   image(currentImage,0,0);
 }
 
