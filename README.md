@@ -1,7 +1,7 @@
 # CSC 545 Term Project
 
 ## Overview
-This steganography application with a GUI interface is designed to hide and find secret messages within an image.
+This steganography application is designed to hide and find secret messages within an image. It can be used with a GUI interface.
 
 The first version was finished on 5/12/2016, and is partially hosted in this repository.
 
